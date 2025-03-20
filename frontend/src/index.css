@@ -1,0 +1,20 @@
+@import "tailwindcss";
+
+@plugin "tailwindcss-animate";
+/* Hide scrollbar for Chrome, Safari, and Edge */
+.conversation-area::-webkit-scrollbar,
+.message-box::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for Firefox */
+.conversation-area,
+.message-box {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.message{
+    scrollbar-width: none;
+  -ms-overflow-style: none;
+}
