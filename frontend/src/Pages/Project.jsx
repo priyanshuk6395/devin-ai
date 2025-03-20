@@ -42,7 +42,6 @@ const Project = () => {
     if (!webContainer) {
       getWebContainer().then((container) => {
         setWebContainer(container);
-        console.log("connected cony");
       });
     }
 
@@ -185,7 +184,7 @@ const Project = () => {
         fileTree: ft,
       })
       .then((res) => {
-        console.log(res.project);
+        
       })
       .catch((err) => {
         console.log("errors: ", err);
@@ -359,7 +358,7 @@ const Project = () => {
                 installProcess.output.pipeTo(
                   new WritableStream({
                     write(chunk) {
-                      console.log(chunk);
+                      
                     },
                   })
                 );
@@ -373,7 +372,7 @@ const Project = () => {
                 tempRunProcess.output.pipeTo(
                   new WritableStream({
                     write(chunk) {
-                      console.log(chunk);
+                      
                     },
                   })
                 );
@@ -381,7 +380,7 @@ const Project = () => {
                 setRunProcess(tempRunProcess);
 
                 webContainer.on("server-ready", (port, url) => {
-                  console.log(port, url);
+                  
                   setIframeUrl(url);
                 });
               }}

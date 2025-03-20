@@ -37,7 +37,7 @@ const SidePanel = ({ loc, isOpen, onClose }) => {
   return (
     <div
       ref={panelRef}
-      className="fixed top-0 left-0 h-full w-72 sm:w-1/3 md:w-1/4 bg-white dark:bg-gray-800 shadow-lg p-4 -translate-x-full"
+      className="fixed top-0 left-0 h-full w-72 sm:w-1/3 md:w-1/4 mt-14 bg-white dark:bg-gray-800 shadow-lg p-4 -translate-x-full"
     >
       <button onClick={onClose} className="absolute top-2 right-2 p-2">
         <i className="ri-close-line text-xl text-gray-700 dark:text-white"></i>
