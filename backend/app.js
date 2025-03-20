@@ -9,8 +9,6 @@ connect();
 const app = express();
 app.use(cors({ origin: `${process.env.REACT_URL}`, credentials: true }));
 app.use((req, res, next) => {
-    console.log(`[${new Date().toISOString()}] ${req.method} ${req.originalUrl}`);
-    console.log(req.body);
     console.log(req.headers.origin);
     next();
   });

@@ -21,8 +21,7 @@ const io = new Server(server, {
 
 io.use(async (socket, next) => {
   try {
-    // Debugging CORS
-    console.log(`CORS Origin: ${process.env.REACT_URL}`);
+    // Debugging CORS   
     const token =
       socket.handshake.auth?.token ||
       socket.handshake.headers.authorization?.split(" ")[1];
@@ -46,14 +45,12 @@ io.use(async (socket, next) => {
     socket.user = decoded;
     next();
   } catch (error) {
-    console.error("Socket authentication error:", error);
     next(new Error("Internal server error"));
   }
 });
 
 io.on("connection", (socket) => {
   socket.roomId = socket.project._id.toString();
-  console.log("Connected to socket");
   socket.join(socket.roomId);
   socket.on("project-message", async (data) => {
     const message = data.message;
@@ -71,11 +68,9 @@ io.on("connection", (socket) => {
   });
 
   socket.on("event", (data) => {
-    console.log("Received event:", data);
   });
 
   socket.on("disconnect", () => {
-    console.log("Socket disconnected");
     socket.leave(socket.roomId);
   });
 });

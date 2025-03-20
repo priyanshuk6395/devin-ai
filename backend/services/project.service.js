@@ -6,7 +6,6 @@ export const createProject = async ({ name, user }) => {
     const project = await projectModel.create({ name: name, users: [user] });
     return project;
   } catch (error) {
-    console.error("Error creating project:", error);
     throw new Error("Failed to create project");
   }
 };
@@ -16,7 +15,6 @@ export const getAllProject = async (userId) => {
     const allProjects = projectModel.find({ users: userId });
     return allProjects;
   } catch (err) {
-    console.error("Error fetching list: ", err);
     throw new Error("Failed to fetch list");
   }
 };
@@ -48,7 +46,6 @@ export const addUsersToProject = async ({ projectId, users, userId }) => {
 
     return updatedProject;
   } catch (err) {
-    console.log("Error to add User: ", err);
     throw new Error("Failed to add user");
   }
 };

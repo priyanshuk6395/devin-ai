@@ -4,7 +4,7 @@ import {
   getAllProject,
   addUsersToProject,
   getProjectById,
-  updateFileTree
+  updateFileTree,
 } from "../services/project.service.js";
 import { validationResult } from "express-validator";
 
@@ -28,7 +28,6 @@ export const createProjectController = async (req, res) => {
 
     res.status(201).json(project);
   } catch (err) {
-    console.log(err);
     res.status(400).json({ error: err.message });
   }
 };
@@ -43,14 +42,13 @@ export const getProjectController = async (req, res) => {
     const allProjects = await getAllProject(loggedInUserId);
     res.status(200).json({ projects: allProjects });
   } catch (err) {
-    console.log(err);
     res.status(500).json({ error: err.message });
   }
 };
 
 export const addUserController = async (req, res) => {
   const errors = validationResult(req);
-  if (!errors.isEmpty()) {    
+  if (!errors.isEmpty()) {
     return res.status(403).json({ errors: errors.array() });
   }
   try {
@@ -61,44 +59,45 @@ export const addUserController = async (req, res) => {
       return res.status(400).send("Invalid project ID.");
     }
 
-    if (!Array.isArray(users) || users.some(id => !mongoose.Types.ObjectId.isValid(id))) {
+    if (
+      !Array.isArray(users) ||
+      users.some((id) => !mongoose.Types.ObjectId.isValid(id))
+    ) {
       return res.status(400).send("Invalid user ID(s) in users array.");
     }
 
-    const updatedProject = await addUsersToProject({ projectId, users, userId });
+    const updatedProject = await addUsersToProject({
+      projectId,
+      users,
+      userId,
+    });
 
     res.status(201).json({ project: updatedProject });
   } catch (err) {
-    console.log(err);
     res.status(400).json({ error: err.message });
   }
 };
 
-export const getProjectByIdController = async (req,res)=>{
-  const {projectId}=req.params;
-  try{
-    const project = await getProjectById({projectId});
-    return res.status(200).json({project});
-  }catch(err){
-    return res.status(400).json({error:err.message})
+export const getProjectByIdController = async (req, res) => {
+  const { projectId } = req.params;
+  try {
+    const project = await getProjectById({ projectId });
+    return res.status(200).json({ project });
+  } catch (err) {
+    return res.status(400).json({ error: err.message });
   }
+};
 
-}
-
-export const updateFileTreeController = async (req,res)=>{
-  const errors= validationResult(req);
-  if(!errors.isEmpty()){
-    console.log(errors);
-    
-    return res.status(500).json({errors:errors.array()})
+export const updateFileTreeController = async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(500).json({ errors: errors.array() });
   }
-  try{
-    const {projectId,fileTree}= req.body;
-    const project=await updateFileTree({projectId,fileTree});
-    return res.status(200).json({project});
-  }catch(err){
-    console.log(err);
-    
-    res.status(500).json({error:err.message})
+  try {
+    const { projectId, fileTree } = req.body;
+    const project = await updateFileTree({ projectId, fileTree });
+    return res.status(200).json({ project });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
-}
+};
